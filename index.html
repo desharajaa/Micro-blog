@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chirp — Micro Blogging</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <section id="authScreen" class="auth-screen">
+    <div class="auth-card">
+      <a class="brand auth-brand" href="#"><span class="brand-mark">c</span><span>chirp<span class="brand-dot">.</span></span></a>
+      <span class="eyebrow">YOUR DAILY DOSE OF IDEAS</span>
+      <h1 id="authTitle">Welcome back</h1>
+      <p id="authSubtitle">Sign in to continue sharing your thoughts.</p>
+      <form id="authForm">
+        <div id="signupNameWrap" class="auth-field" hidden><label for="authName">Your name</label><input id="authName" maxlength="30" placeholder="Enter your name" /></div>
+        <div class="auth-field"><label for="authEmail">Email address</label><input id="authEmail" type="email" placeholder="you@example.com" required autocomplete="email" /></div>
+        <div class="auth-field"><label for="authPassword">Password</label><input id="authPassword" type="password" minlength="6" placeholder="At least 6 characters" required autocomplete="current-password" /></div>
+        <button id="authSubmit" class="primary-btn full-btn" type="submit">Sign in</button>
+      </form>
+      <p class="auth-switch"><span id="authSwitchText">Don't have an account?</span> <button id="authSwitch" type="button">Sign up</button></p>
+      <p id="authError" class="auth-error" role="alert"></p>
+      <p class="auth-demo-note">Demo project: accounts are stored only in this browser.</p>
+    </div>
+  </section>
+  <div class="app-shell" id="appShell" hidden>
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="Chirp home"><span class="brand-mark">c</span><span>chirp<span class="brand-dot">.</span></span></a>
+      <nav class="nav-menu">
+        <button class="nav-item active" data-view="home"><span class="nav-icon">⌂</span> Home</button>
+        <button class="nav-item" data-view="explore"><span class="nav-icon">⌕</span> Explore</button>
+        <button class="nav-item" data-view="following"><span class="nav-icon">♡</span> Following</button>
+        <button class="nav-item" data-view="profile"><span class="nav-icon">◎</span> My profile</button>
+      </nav>
+      <div class="sidebar-note">
+        <div class="note-icon">✦</div>
+        <strong>Your little corner<br />of the internet.</strong>
+        <p>Share a thought. Find your people.</p>
+      </div>
+      <div class="sidebar-user">
+        <div class="avatar avatar-me">D</div>
+        <div class="user-meta"><strong id="sidebarName">Dev</strong><span id="sidebarHandle">@dev</span></div>
+        <button class="more-btn" id="editProfileBtn" title="Edit profile">•••</button><button class="logout-btn" id="logoutBtn" title="Sign out">↪</button>
+      </div>
+    </aside>
+
+    <main class="main-column">
+      <header class="topbar">
+        <div><span class="eyebrow">YOUR DAILY DOSE OF IDEAS</span><h1 id="pageTitle">Home</h1></div>
+        <div class="top-actions"><span class="online-dot"></span><span>Community is buzzing</span></div>
+      </header>
+
+      <section class="composer card" id="composer">
+        <div class="avatar avatar-me">D</div>
+        <div class="composer-main">
+          <textarea id="postText" maxlength="280" placeholder="What's happening in your world?" rows="3"></textarea>
+          <div class="image-preview-wrap" id="imagePreviewWrap" hidden>
+            <img id="imagePreview" alt="Selected upload preview" />
+            <button id="removeImageBtn" class="remove-image" type="button" aria-label="Remove image">×</button>
+          </div>
+          <div class="composer-footer">
+            <div class="composer-tools">
+              <label class="tool-button" for="postImage" title="Add image">▧ <span>Photo</span></label>
+              <input type="file" id="postImage" accept="image/*" hidden />
+              <span class="char-count" id="charCount">0 / 280</span>
+            </div>
+            <button class="primary-btn" id="publishBtn">Post <span>↗</span></button>
+          </div>
+        </div>
+      </section>
+
+      <div class="feed-heading"><div><h2 id="feedHeading">Your feed</h2><p id="feedSubheading">Fresh thoughts from your community</p></div><button class="sort-btn" id="sortBtn">Latest ↓</button></div>
+      <section id="feed" class="feed" aria-live="polite"></section>
+      <div id="emptyState" class="empty-state card" hidden><div class="empty-art">✦</div><h3>It's quiet around here</h3><p>Follow someone or share the first thought to get things moving.</p><button class="primary-btn" id="emptyAction">Explore people</button></div>
+    </main>
+
+    <aside class="right-column">
+      <label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Search people or posts..." /></label>
+      <section class="side-card">
+        <div class="section-title"><h2>Who to follow</h2><span class="sparkle">✦</span></div>
+        <div id="suggestions" class="suggestions"></div>
+        <button class="text-link" id="seeAllBtn">Discover the community →</button>
+      </section>
+      <section class="side-card trending-card">
+        <div class="section-title"><h2>Trending topics</h2><span class="trend-icon">↗</span></div>
+        <button class="trend-row" data-tag="design"><span><small>DESIGN · TRENDING</small><strong>#design</strong><small id="tagDesign">Explore creative ideas</small></span><b>↗</b></button>
+        <button class="trend-row" data-tag="coding"><span><small>TECH · TRENDING</small><strong>#coding</strong><small id="tagCoding">Build something cool</small></span><b>↗</b></button>
+        <button class="trend-row" data-tag="dailythoughts"><span><small>COMMUNITY · POPULAR</small><strong>#dailythoughts</strong><small>Little thoughts, big feelings</small></span><b>↗</b></button>
+      </section>
+      <footer class="app-footer">About · Guidelines · Privacy<br /><span>© 2026 Chirp Social</span><p>Made for sharing good thoughts.</p></footer>
+    </aside>
+  </div>
+
+  <dialog id="profileDialog" class="modal">
+    <form method="dialog" id="profileForm">
+      <div class="modal-heading"><div><span class="eyebrow">MAKE IT YOURS</span><h2>Edit profile</h2></div><button class="close-btn" value="cancel" aria-label="Close">×</button></div>
+      <label class="field-label">Display name<input id="profileNameInput" maxlength="30" required /></label>
+      <label class="field-label">Username<input id="profileHandleInput" maxlength="20" required /></label>
+      <label class="field-label">Bio<textarea id="profileBioInput" maxlength="120" rows="3" placeholder="A little about you..."></textarea></label>
+      <button class="primary-btn full-btn" id="saveProfileBtn" value="default">Save profile</button>
+    </form>
+  </dialog>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="script.js"></script>
+</body>
+</html>
